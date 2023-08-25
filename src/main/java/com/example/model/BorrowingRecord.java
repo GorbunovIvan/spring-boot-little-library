@@ -50,4 +50,8 @@ public class BorrowingRecord {
     public boolean isBorrowed() {
         return getReturnedAt() == null;
     }
+
+    public void returnBook() {
+        setReturnedAt(LocalDateTime.now());
+    }
 }

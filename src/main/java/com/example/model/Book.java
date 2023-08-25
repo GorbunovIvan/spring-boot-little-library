@@ -51,4 +51,8 @@ public class Book {
         }
         return borrowingRecord.getVisitor();
     }
+
+    public boolean isFree() {
+        return getCurrentBorrowingRecord() == null;
+    }
 }
