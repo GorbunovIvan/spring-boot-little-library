@@ -1,18 +1,22 @@
 package com.example.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(of = { "name", "authors" })
+@EqualsAndHashCode(of = { "name", "year", "authors" })
 @ToString
 public class Book {
 
@@ -22,10 +26,15 @@ public class Book {
 
     @Column(name = "name")
     @NotNull
-    @Size(min = 1, max = 199, message = "name should be not in range from 3 to 99 characters long")
+    @Size(min = 1, max = 199, message = "name should be in range from 3 to 99 characters long")
     private String name;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @Column(name = "year")
+    @NotNull
+    @Digits(integer = 4, fraction = 0)
+    private Integer year;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
@@ -34,8 +43,9 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
 
     @OneToMany(mappedBy = "book", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OrderBy("borrowedAt")
     @ToString.Exclude
-    private Set<BorrowingRecord> borrowingRecords = new HashSet<>();
+    private Set<BorrowingRecord> borrowingRecords = new TreeSet<>(Comparator.comparing(BorrowingRecord::getBorrowedAt));
 
     public BorrowingRecord getCurrentBorrowingRecord() {
         return borrowingRecords.stream()
@@ -54,5 +64,24 @@ public class Book {
 
     public boolean isFree() {
         return getCurrentBorrowingRecord() == null;
+    }
+
+    public String getAuthorsAsString() {
+        return getAuthors().stream()
+                .map(Author::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getFullName() {
+
+        StringBuilder strBuilder = new StringBuilder();
+
+        strBuilder.append(getName());
+        strBuilder.append(" by ");
+
+        var authorsString = getAuthorsAsString();
+        strBuilder.append(authorsString);
+
+        return strBuilder.toString();
     }
 }

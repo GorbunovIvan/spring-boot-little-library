@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.model.Author;
 import com.example.model.Book;
 import com.example.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class BookService {
     }
 
     public Book create(Book book) {
-        return bookRepository.save(book);
+        return bookRepository.merge(book);
     }
 
     @Transactional
@@ -34,10 +35,15 @@ public class BookService {
             throw new RuntimeException("Book with id '" + id + "' is not found");
         }
         book.setId(id);
-        return bookRepository.save(book);
+        return bookRepository.merge(book);
     }
 
     public void deleteById(Integer id) {
         bookRepository.deleteById(id);
+    }
+
+    public Author getAuthorByName(String name) {
+        return bookRepository.findAuthorByName(name)
+                .orElse(null);
     }
 }

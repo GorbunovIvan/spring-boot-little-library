@@ -19,6 +19,6 @@ public class User {
 
     @Column(name = "name", unique = true)
     @NotNull
-    @Size(min = 3, max = 99, message = "name should be not in range from 3 to 99 characters long")
+    @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String username;
 }
