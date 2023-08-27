@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.controller.converter;
 
 import com.example.model.Author;
 import com.example.service.BookService;

@@ -16,12 +16,24 @@
             <div th:if="${book.getAuthors().size() > 1}">
                 <p>Authors: <span th:text="${book.getAuthorsAsString()}">authors</span></p>
             </div>
+            <div th:if="${book.isFree()}">
+                <p>Is free</p>
+            </div>
+            <div th:unless="${book.isFree()}">
+                <p>Borrowed by: <span th:text="${book.getHolder().getName()}">visitor</span></p>
+            </div>
         </div>
         <div>
             <p><a th:href="@{/books/__${book.getId()}__/edit}">Edit book</a></p>
             <form th:method="DELETE" th:action="@{/books/__${book.getId()}__}">
                 <button type="submit">Delete book</button>
             </form>
+        </div>
+        <div>
+            <h5>Visitors who borrowed the book</h5>
+            <div th:each="borrowingRecord : ${book.getBorrowingRecords()}">
+                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord.getNameForBookPage()}">borrowing record</a></p>
+            </div>
         </div>
     </div>
 </body>

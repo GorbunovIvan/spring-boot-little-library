@@ -54,4 +54,18 @@ public class BorrowingRecord {
     public void returnBook() {
         setReturnedAt(LocalDateTime.now());
     }
+
+    public String getNameForBookPage() {
+        return String.format("(taken by %s at %s and %s)",
+                getVisitor().getName(),
+                getBorrowedAt(),
+                isBorrowed() ? "returned at " + getReturnedAt() : "not returned yet");
+    }
+
+    public String getNameForVisitorPage() {
+        return String.format("%s (taken at %s and %s)",
+                getBook().getFullName(),
+                getBorrowedAt(),
+                isBorrowed() ? "returned at " + getReturnedAt() : "not returned yet");
+    }
 }

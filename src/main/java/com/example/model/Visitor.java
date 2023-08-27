@@ -27,10 +27,32 @@ public class Visitor {
     @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String name;
 
-    @OneToMany(mappedBy = "visitor", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "visitor", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @OrderBy("borrowedAt")
     @ToString.Exclude
     private Set<BorrowingRecord> borrowingRecords = new TreeSet<>(Comparator.comparing(BorrowingRecord::getBorrowedAt));
+
+    public Visitor(String name) {
+        this.name = name;
+    }
+
+    public Set<BorrowingRecord> getBorrowingRecordsNotReturned() {
+        return borrowingRecords.stream()
+                .filter(BorrowingRecord::isBorrowed)
+                .collect(Collectors.toSet());
+    }
+
+    public Set<BorrowingRecord> getBorrowingRecordsReturned() {
+        return borrowingRecords.stream()
+                .filter(br -> !br.isBorrowed())
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Book> getAllBooksEverBorrowed() {
+        return borrowingRecords.stream()
+                .map(BorrowingRecord::getBook)
+                .collect(Collectors.toSet());
+    }
 
     public Set<Book> getHeldBooks() {
         return borrowingRecords.stream()
