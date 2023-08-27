@@ -23,7 +23,7 @@ public class Visitor {
     private Integer id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "name is empty")
     @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String name;
 
@@ -38,13 +38,13 @@ public class Visitor {
 
     public Set<BorrowingRecord> getBorrowingRecordsNotReturned() {
         return borrowingRecords.stream()
-                .filter(BorrowingRecord::isBorrowed)
+                .filter(BorrowingRecord::isBorrowedNow)
                 .collect(Collectors.toSet());
     }
 
     public Set<BorrowingRecord> getBorrowingRecordsReturned() {
         return borrowingRecords.stream()
-                .filter(br -> !br.isBorrowed())
+                .filter(br -> !br.isBorrowedNow())
                 .collect(Collectors.toSet());
     }
 
@@ -56,7 +56,7 @@ public class Visitor {
 
     public Set<Book> getHeldBooks() {
         return borrowingRecords.stream()
-                .filter(BorrowingRecord::isBorrowed)
+                .filter(BorrowingRecord::isBorrowedNow)
                 .map(BorrowingRecord::getBook)
                 .collect(Collectors.toSet());
     }

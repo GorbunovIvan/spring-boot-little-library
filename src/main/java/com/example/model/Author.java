@@ -21,7 +21,7 @@ public class Author {
     private Integer id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "name is empty")
     @Size(min = 1, max = 99, message = "name should be in range from 1 to 99 characters long")
     private String name;
 

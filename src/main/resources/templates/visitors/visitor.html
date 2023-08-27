@@ -19,7 +19,7 @@
         <div>
             <h5>Held books</h5>
             <div th:each="borrowingRecord : ${visitor.getBorrowingRecordsNotReturned()}">
-                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__/edit}" th:text="${borrowingRecord.getNameForVisitorPage()}">borrowing record</a></p>
+                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord.getNameForVisitorPage()}">borrowing record</a></p>
             </div>
             <h5>Books borrowed before</h5>
             <div th:each="borrowingRecord : ${visitor.getBorrowingRecords()}">

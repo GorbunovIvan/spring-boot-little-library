@@ -19,7 +19,9 @@ public class GlobalExceptionHandler {
         e.printStackTrace(new PrintWriter(writer));
         var stackTrace = writer.toString();
 
-        log.error(stackTrace);
+        if (!e.getMessage().equals("No static resource favicon.ico.")) {
+            log.error(stackTrace);
+        }
 
         model.addAttribute("message", e.getMessage());
         model.addAttribute("details", stackTrace);

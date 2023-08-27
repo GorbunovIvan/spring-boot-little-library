@@ -25,12 +25,12 @@ public class Book {
     private Integer id;
 
     @Column(name = "name")
-    @NotNull
+    @NotNull(message = "name is empty")
     @Size(min = 1, max = 199, message = "name should be in range from 3 to 99 characters long")
     private String name;
 
     @Column(name = "year")
-    @NotNull
+    @NotNull(message = "year is empty")
     @Digits(integer = 4, fraction = 0)
     private Integer year;
 
@@ -49,7 +49,7 @@ public class Book {
 
     public BorrowingRecord getCurrentBorrowingRecord() {
         return borrowingRecords.stream()
-                .filter(BorrowingRecord::isBorrowed)
+                .filter(BorrowingRecord::isBorrowedNow)
                 .findAny()
                 .orElse(null);
     }
@@ -76,7 +76,7 @@ public class Book {
 
         StringBuilder strBuilder = new StringBuilder();
 
-        strBuilder.append(getName());
+        strBuilder.append("'").append(getName()).append("'");
         strBuilder.append(" by ");
 
         var authorsString = getAuthorsAsString();

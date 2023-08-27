@@ -7,6 +7,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor
 public class VisitorConverter implements Converter<String, Visitor> {
@@ -15,10 +17,14 @@ public class VisitorConverter implements Converter<String, Visitor> {
 
     @Override
     public Visitor convert(@Nullable String source) {
+        if (Objects.requireNonNullElse(source, "").isBlank()) {
+            return null;
+        }
         var visitor = visitorService.getByName(source);
         if (visitor != null) {
             return visitor;
         }
-        return new Visitor(source);
+        visitor = new Visitor(source);
+        return visitorService.create(visitor);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -19,6 +20,10 @@ public class BookService {
     public Book getById(Integer id) {
         return bookRepository.findById(id)
                 .orElse(null);
+    }
+
+    public List<Book> getAllByName(String name) {
+        return bookRepository.findAllByNameIgnoreCase(name);
     }
 
     public Set<Book> getAll() {

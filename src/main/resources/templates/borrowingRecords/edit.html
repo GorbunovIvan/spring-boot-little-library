@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding new borrowing-record</title>
+</head>
+<body>
+    <div>
+
+        <h4>Editing borrowing-record '<span th:text="${borrowingRecord}">borrowing-record</span>'</h4>
+
+        <div>
+            <form method="POST" th:action="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:object="${borrowingRecord}">
+
+                <div>
+                    <label for="book">Book</label>
+                    <input th:if="${borrowingRecord.getBook() != null}" id="book" type="text" name="book" th:value="${borrowingRecord.book.getFullName()}"/>
+                    <input th:if="${borrowingRecord.getBook() == null}" id="book" type="text" th:field="*{book}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('book')}" th:errors="*{book}">book error</div>
+                </div>
+
+                <div>
+                    <label for="visitor">Visitor</label>
+                    <input th:if="${borrowingRecord.getVisitor() != null}" id="visitor" type="text" name="visitor" th:value="${borrowingRecord.visitor.getName()}"/>
+                    <input th:if="${borrowingRecord.getVisitor() == null}" id="visitor" type="text" th:field="*{visitor}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('visitor')}" th:errors="*{visitor}">visitor error</div>
+                </div>
+
+                <div>
+                    <label for="borrowedAt">Borrowed at</label>
+                    <input id="borrowedAt" type="text" th:field="*{borrowedAt}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('borrowedAt')}" th:errors="*{borrowedAt}">'borrowed at' error</div>
+                </div>
+
+                <div>
+                    <label for="returnedAt">Returned at</label>
+                    <input id="returnedAt" type="text" th:field="*{returnedAt}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('returnedAt')}" th:errors="*{returnedAt}">'returned at' error</div>
+                </div>
+
+                <div>
+                    <label for="user">User</label>
+                    <input th:if="${borrowingRecord.getUser() != null}" id="user" type="text" name="user" th:value="${borrowingRecord.user.getName()}"/>
+                    <input th:if="${borrowingRecord.getUser() == null}" id="user" type="text" th:field="*{user}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('user')}" th:errors="*{user}">user error</div>
+                </div>
+
+                <div>
+                    <button type="submit">Update borrowing record</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

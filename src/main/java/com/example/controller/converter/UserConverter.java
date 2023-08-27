@@ -1,7 +1,6 @@
 package com.example.controller.converter;
 
-import com.example.model.Author;
-import com.example.service.BookService;
+import com.example.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
@@ -11,19 +10,16 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class AuthorConverter implements Converter<String, Author> {
+public class UserConverter implements Converter<String, User> {
 
-    private final BookService bookService;
+//    private final UserService userService;
 
     @Override
-    public Author convert(@Nullable String source) {
+    public User convert(@Nullable String source) {
         if (Objects.requireNonNullElse(source, "").isBlank()) {
             return null;
         }
-        var author = bookService.getAuthorByName(source);
-        if (author != null) {
-            return author;
-        }
-        return new Author(source);
+        return null;
+//        return userService.getByName(source);
     }
 }

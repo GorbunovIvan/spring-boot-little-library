@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrowing records</title>
+</head>
+<body>
+    <div>
+        <h4>Borrowing records</h4>
+        <div>
+            <p><a href="/borrowing-records/new">Add new borrowing record</a></p>
+        </div>
+        <div th:each="borrowingRecord : ${borrowingRecords}">
+            <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord}">borrowing record</a></p>
+        </div>
+    </div>
+</body>
+</html>

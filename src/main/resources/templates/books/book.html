@@ -25,6 +25,9 @@
         </div>
         <div>
             <p><a th:href="@{/books/__${book.getId()}__/edit}">Edit book</a></p>
+            <div th:if="${book.isFree()}">
+                <p><a th:href="@{/borrowing-records/new?bookId=__${book.getId()}__}">Borrow book</a></p>
+            </div>
             <form th:method="DELETE" th:action="@{/books/__${book.getId()}__}">
                 <button type="submit">Delete book</button>
             </form>
