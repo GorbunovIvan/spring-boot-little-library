@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${'borrowingRecord :: ' + borrowingRecord}">Visitor</title>
+    <title th:text="${'borrowing record :: ' + borrowingRecord.toString()}">Borrowing record</title>
 </head>
 <body>
     <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
         <h4>Borrowing record for '<span th:text="${borrowingRecord}">borrowingRecord</span>'</h4>
         <div>
             <p>Book: <a th:href="@{/books/__${borrowingRecord.getBook().getId()}__}" th:text="${borrowingRecord.getBook().getName()}">book</a></p>

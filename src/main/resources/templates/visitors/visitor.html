@@ -6,6 +6,7 @@
 </head>
 <body>
     <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
         <h4>Visitor '<span th:text="${visitor.getName()}">visitor</span>'</h4>
         <div>
             <p>Name: <span th:text="${visitor.getName()}">name</span></p>

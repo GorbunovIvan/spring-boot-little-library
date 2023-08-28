@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adding new visitor</title>
+    <title th:href="${'editing visitor ' + visitor.getName()}">Editing visitor</title>
 </head>
 <body>
     <div>
+
+        <div th:include="fragments/menu :: commonMenu"></div>
 
         <h4>Editing visitor '<span style="font-style: italic" th:text="${visitor.getName()}">visitor</span>'</h4>
 

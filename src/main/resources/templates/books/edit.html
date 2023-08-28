@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adding new book</title>
+    <title th:text="${'editing book ' + book.getName()}">Editing book</title>
     <script th:src="@{/js/books.js}" type="text/javascript"></script>
 </head>
 <body>
     <div>
+
+        <div th:include="fragments/menu :: commonMenu"></div>
 
         <h4>Editing book '<span style="font-style: italic" th:text="${book.getName()}">book</span>' by <span th:text="${book.getAuthorsAsString()}">authors</span></h4>
 

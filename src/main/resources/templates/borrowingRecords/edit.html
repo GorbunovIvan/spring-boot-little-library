@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adding new borrowing-record</title>
+    <title th:text="${'editing borrowing record ' + borrowingRecord.toString()}">Editing borrowing record</title>
 </head>
 <body>
     <div>
 
-        <h4>Editing borrowing-record '<span th:text="${borrowingRecord}">borrowing-record</span>'</h4>
+        <div th:include="fragments/menu :: commonMenu"></div>
+
+        <h4>Editing borrowing-record '<span th:text="${borrowingRecord.toString()}">borrowing-record</span>'</h4>
 
         <div>
             <form method="POST" th:action="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:object="${borrowingRecord}">
