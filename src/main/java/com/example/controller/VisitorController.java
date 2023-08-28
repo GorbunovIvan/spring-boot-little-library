@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import com.example.model.User;
 import com.example.model.Visitor;
+import com.example.security.SecurityUtils;
 import com.example.service.VisitorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class VisitorController {
 
     private final VisitorService visitorService;
+    private final SecurityUtils securityUtils;
 
     @GetMapping
     public String getAll(Model model) {
@@ -75,5 +78,10 @@ public class VisitorController {
     public String delete(@PathVariable int id) {
         visitorService.deleteById(id);
         return "redirect:/visitors";
+    }
+
+    @ModelAttribute("currentUser")
+    private User currentUser() {
+        return securityUtils.getCurrentUser();
     }
 }

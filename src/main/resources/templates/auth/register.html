@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registering</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <form method="POST" action="/auth" th:object="${user}">
+            <div>
+                <label>Username <input type="text" th:field="*{username}"/></label>
+                <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</div>
+            </div>
+            <div>
+                <label>Password <input type="password" th:field="*{password}"/></label>
+                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
+            </div>
+            <div><button type="submit">Register</button></div>
+        </form>
+        <p>Or you can <a href="/auth/login">log in</a></p>
+    </div>
+</body>
+</html>

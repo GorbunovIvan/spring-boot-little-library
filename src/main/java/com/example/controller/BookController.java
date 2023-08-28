@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.model.Author;
 import com.example.model.Book;
+import com.example.model.User;
+import com.example.security.SecurityUtils;
 import com.example.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class BookController {
 
     private final BookService bookService;
+    private final SecurityUtils securityUtils;
 
     @GetMapping
     public String getAll(Model model) {
@@ -107,5 +110,10 @@ public class BookController {
         } else {
             book.setAuthors(authorsCollection);
         }
+    }
+
+    @ModelAttribute("currentUser")
+    private User currentUser() {
+        return securityUtils.getCurrentUser();
     }
 }
