@@ -42,7 +42,7 @@
 
                 <div>
                     <label for="user">User</label>
-                    <input th:if="${borrowingRecord.getUser() != null}" id="user" type="text" name="user" th:value="${borrowingRecord.user.getName()}"/>
+                    <input th:if="${borrowingRecord.getUser() != null}" id="user" type="text" name="user" th:value="${borrowingRecord.user.getUsername()}"/>
                     <input th:if="${borrowingRecord.getUser() == null}" id="user" type="text" th:field="*{user}"/>
                     <div style="color:red" th:if="${#fields.hasErrors('user')}" th:errors="*{user}">user error</div>
                 </div>

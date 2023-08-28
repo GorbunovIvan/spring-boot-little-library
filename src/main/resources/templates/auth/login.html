@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logging in</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <form method="POST" action="/auth/login">
+            <div><label>Username <input type="text" name="username"/></label></div>
+            <div><label>Password <input type="password" name="password"/></label></div>
+            <div><button type="submit">Log in</button></div>
+        </form>
+        <p>Or you can <a href="/auth/register">register</a></p>
+    </div>
+</body>
+</html>

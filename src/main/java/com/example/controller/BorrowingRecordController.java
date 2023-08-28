@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.model.BorrowingRecord;
+import com.example.model.User;
+import com.example.security.SecurityUtils;
 import com.example.service.BookService;
 import com.example.service.BorrowingRecordService;
 import jakarta.validation.Valid;
@@ -19,6 +21,8 @@ public class BorrowingRecordController {
 
     private final BorrowingRecordService borrowingRecordService;
     private final BookService bookService;
+
+    private final SecurityUtils securityUtils;
 
     @GetMapping
     public String getAll(Model model) {
@@ -63,7 +67,10 @@ public class BorrowingRecordController {
             model.addAttribute("borrowingRecord", borrowingRecord);
             return "borrowingRecords/new";
         }
+
+        borrowingRecord.setUser(currentUser());
         borrowingRecordService.create(borrowingRecord);
+
         return "redirect:/borrowing-records";
     }
 
@@ -82,8 +89,10 @@ public class BorrowingRecordController {
                          @ModelAttribute @Valid BorrowingRecord borrowingRecord, BindingResult bindingResult) {
 
         if (borrowingRecord.getBook() != null && !borrowingRecord.getBook().isFree()) {
-            if (!borrowingRecord.getBook().getCurrentBorrowingRecord().getId().equals(id)) {
-                throw new RuntimeException("Book '" + borrowingRecord.getBook().getFullName() + "' is not available");
+            if (borrowingRecord.getReturnedAt() == null) {
+                if (!borrowingRecord.getBook().getCurrentBorrowingRecord().getId().equals(id)) {
+                    throw new RuntimeException("Book '" + borrowingRecord.getBook().getFullName() + "' is not available");
+                }
             }
         }
 
@@ -113,5 +122,10 @@ public class BorrowingRecordController {
     public String delete(@PathVariable long id) {
         borrowingRecordService.deleteById(id);
         return "redirect:/borrowing-records";
+    }
+
+    @ModelAttribute("currentUser")
+    private User currentUser() {
+        return securityUtils.getCurrentUser();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.controller.converter;
 
 import com.example.model.User;
+import com.example.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
@@ -12,14 +13,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserConverter implements Converter<String, User> {
 
-//    private final UserService userService;
+    private final UserService userService;
 
     @Override
     public User convert(@Nullable String source) {
         if (Objects.requireNonNullElse(source, "").isBlank()) {
             return null;
         }
-        return null;
-//        return userService.getByName(source);
+        return userService.getByUsername(source);
     }
 }
