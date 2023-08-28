@@ -12,21 +12,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode(of = { "book", "visitor", "borrowedAt" })
-@ToString
 public class BorrowingRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "book_id")
-    @NotNull
+    @NotNull(message = "book is empty")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "visitor_id")
-    @NotNull
+    @NotNull(message = "visitor is empty")
     private Visitor visitor;
 
     @Column(name = "borrowed_at")
@@ -47,11 +46,39 @@ public class BorrowingRecord {
         }
     }
 
-    public boolean isBorrowed() {
+    @PreRemove
+    private void remove() {
+        visitor.getBorrowingRecords().remove(this);
+        book.getBorrowingRecords().remove(this);
+    }
+
+    public boolean isBorrowedNow() {
         return getReturnedAt() == null;
     }
 
     public void returnBook() {
         setReturnedAt(LocalDateTime.now());
+    }
+
+    public String toString() {
+        return String.format("%s taken by %s at %s and %s",
+                getBook().getFullName(),
+                getVisitor().getName(),
+                getBorrowedAt(),
+                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
+    }
+
+    public String getNameForBookPage() {
+        return String.format("%s at %s and %s",
+                getVisitor().getName(),
+                getBorrowedAt(),
+                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
+    }
+
+    public String getNameForVisitorPage() {
+        return String.format("%s (taken at %s and %s)",
+                getBook().getFullName(),
+                getBorrowedAt(),
+                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
     }
 }

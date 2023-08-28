@@ -17,8 +17,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name", unique = true)
-    @NotNull
-    @Size(min = 3, max = 99, message = "name should be not in range from 3 to 99 characters long")
+    @Column(name = "username", unique = true)
+    @NotNull(message = "username is empty")
+    @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String username;
 }

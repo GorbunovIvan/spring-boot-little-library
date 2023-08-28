@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrowing records</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <h4>Borrowing records</h4>
+        <div>
+            <a href="/borrowing-records/new">Add new borrowing record</a>
+            <hr/>
+        </div>
+        <div th:each="borrowingRecord : ${borrowingRecords}">
+            <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord}">borrowing record</a></p>
+        </div>
+    </div>
+</body>
+</html>

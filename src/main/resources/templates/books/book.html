@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'book :: ' + book.getFullName()}">Book</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <h4>Book '<span style="font-style: italic" th:text="${book.getName()}">book</span>' by <span th:text="${book.getAuthorsAsString()}">authors</span></h4>
+        <div>
+            <p>Name: <span th:text="${book.getName()}">name</span></p>
+            <p>Year: <span th:text="${book.getYear()}">year</span></p>
+            <div th:if="${book.getAuthors().size() == 1}">
+                <p>Author: <span th:text="${book.getAuthors()[0].getName()}">author</span></p>
+            </div>
+            <div th:if="${book.getAuthors().size() > 1}">
+                <p>Authors: <span th:text="${book.getAuthorsAsString()}">authors</span></p>
+            </div>
+            <div th:if="${book.isFree()}">
+                <p>Is free</p>
+            </div>
+            <div th:unless="${book.isFree()}">
+                <p>Borrowed by: <a th:href="@{/visitors/__${book.getHolder().getId()}__}" th:text="${book.getHolder().getName()}">visitor</a></p>
+            </div>
+        </div>
+        <div>
+            <p><a th:href="@{/books/__${book.getId()}__/edit}">Edit book</a></p>
+            <div th:if="${book.isFree()}">
+                <p><a th:href="@{/borrowing-records/new?bookId=__${book.getId()}__}">Borrow book</a></p>
+            </div>
+            <form hidden th:method="DELETE" th:action="@{/books/__${book.getId()}__}">
+                <button type="submit">Delete book</button>
+            </form>
+        </div>
+        <div>
+            <h5>Visitors who borrowed the book</h5>
+            <div th:each="borrowingRecord : ${book.getBorrowingRecords()}">
+                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord.getNameForBookPage()}">borrowing record</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

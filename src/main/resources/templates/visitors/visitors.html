@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitors</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <h4>Visitors</h4>
+        <div>
+            <a href="/visitors/new">Add new visitor</a>
+            <hr/>
+        </div>
+        <div th:each="visitor : ${visitors}">
+            <p><a th:href="@{/visitors/__${visitor.getId()}__}" th:text="${visitor.getName()}">visitor</a></p>
+        </div>
+    </div>
+</body>
+</html>

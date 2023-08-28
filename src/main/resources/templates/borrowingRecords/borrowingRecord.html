@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'borrowing record :: ' + borrowingRecord.toString()}">Borrowing record</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <h4>Borrowing record for '<span th:text="${borrowingRecord}">borrowingRecord</span>'</h4>
+        <div>
+            <p>Book: <a th:href="@{/books/__${borrowingRecord.getBook().getId()}__}" th:text="${borrowingRecord.getBook().getName()}">book</a></p>
+            <p>Visitor: <a th:href="@{/visitors/__${borrowingRecord.getVisitor().getId()}__}" th:text="${borrowingRecord.getVisitor().getName()}">visitor</a></p>
+            <p>Borrowed at: <span th:text="${borrowingRecord.getBorrowedAt()}">borrowed at</span></p>
+            <p>Returned at: <span th:text="${borrowingRecord.getReturnedAt()}">returned at</span></p>
+            <p>User: <span th:text="${borrowingRecord.getUser() == null ? '' : borrowingRecord.getUser().getUsername()}">user</span></p>
+        </div>
+        <div>
+            <div th:if="${borrowingRecord.isBorrowedNow()}">
+                <form th:method="PATCH" th:action="@{/borrowing-records/__${borrowingRecord.getId()}__/return}">
+                    <button type="submit">Return book</button>
+                </form>
+            </div>
+            <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__/edit}">Edit borrowing record</a></p>
+            <form th:method="DELETE" th:action="@{/borrowing-records/__${borrowingRecord.getId()}__}">
+                <button type="submit">Delete borrowing-record</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

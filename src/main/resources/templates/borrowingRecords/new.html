@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding new borrowing record</title>
+</head>
+<body>
+    <div>
+
+        <div th:include="fragments/menu :: commonMenu"></div>
+
+        <h4>Adding new borrowing-record</h4>
+
+        <div>
+            <form method="POST" action="/borrowing-records" th:object="${borrowingRecord}">
+
+                <div>
+                    <label for="book">Book</label>
+                    <input th:if="${borrowingRecord.getBook() != null}" id="book" type="text" name="book" th:value="${borrowingRecord.book.getFullName()}"/>
+                    <input th:if="${borrowingRecord.getBook() == null}" id="book" type="text" th:field="*{book}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('book')}" th:errors="*{book}">book error</div>
+                </div>
+
+                <div>
+                    <label for="visitor">Visitor</label>
+                    <input th:if="${borrowingRecord.getVisitor() != null}" id="visitor" type="text" name="visitor" th:value="${borrowingRecord.visitor.getName()}"/>
+                    <input th:if="${borrowingRecord.getVisitor() == null}" id="visitor" type="text" th:field="*{visitor}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('visitor')}" th:errors="*{visitor}">visitor error</div>
+                </div>
+
+                <div>
+                    <label hidden for="borrowedAt">Borrowed at</label>
+                    <input hidden id="borrowedAt" type="text" th:field="*{borrowedAt}"/>
+                    <div hidden style="color:red" th:if="${#fields.hasErrors('borrowedAt')}" th:errors="*{borrowedAt}">'borrowed at' error</div>
+                </div>
+
+                <br/>
+
+                <div>
+                    <button type="submit">Add borrowing record</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

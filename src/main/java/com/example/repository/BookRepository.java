@@ -1,7 +1,18 @@
 package com.example.repository;
 
+import com.example.model.Author;
 import com.example.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface BookRepository extends JpaRepository<Book, Integer> {
+import java.util.List;
+import java.util.Optional;
+
+public interface BookRepository extends JpaRepository<Book, Integer>, BookRepositoryCustom {
+
+    List<Book> findAllByNameIgnoreCase(String name);
+
+    @Query("FROM Author WHERE name = :name")
+    Optional<Author> findAuthorByName(@Param("name") String name);
 }

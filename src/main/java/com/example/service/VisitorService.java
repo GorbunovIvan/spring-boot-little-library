@@ -20,6 +20,11 @@ public class VisitorService {
                 .orElse(null);
     }
 
+    public Visitor getByName(String name) {
+        return visitorRepository.findByNameIgnoreCase(name)
+                .orElse(null);
+    }
+
     public Set<Visitor> getAll() {
         return new HashSet<>(visitorRepository.findAll());
     }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'visitor :: ' + visitor.getName()}">Visitor</title>
+</head>
+<body>
+    <div>
+        <div th:include="fragments/menu :: commonMenu"></div>
+        <h4>Visitor '<span th:text="${visitor.getName()}">visitor</span>'</h4>
+        <div>
+            <p>Name: <span th:text="${visitor.getName()}">name</span></p>
+        </div>
+        <div>
+            <p><a th:href="@{/visitors/__${visitor.getId()}__/edit}">Edit visitor</a></p>
+            <form hidden th:method="DELETE" th:action="@{/visitors/__${visitor.getId()}__}">
+                <button type="submit">Delete visitor</button>
+            </form>
+        </div>
+        <div>
+            <h5>Held books</h5>
+            <div th:each="borrowingRecord : ${visitor.getBorrowingRecordsNotReturned()}">
+                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord.getNameForVisitorPage()}">borrowing record</a></p>
+            </div>
+            <h5>Books borrowed before</h5>
+            <div th:each="borrowingRecord : ${visitor.getBorrowingRecordsReturned()}">
+                <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord.getNameForVisitorPage()}">borrowing record</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding new book</title>
+    <script th:src="@{/js/books.js}" type="text/javascript"></script>
+</head>
+<body>
+    <div>
+
+        <div th:include="fragments/menu :: commonMenu"></div>
+
+        <h4>Adding new book</h4>
+
+        <div>
+            <form method="POST" action="/books" th:object="${book}">
+
+                <div>
+                    <label for="name">Name</label>
+                    <input id="name" type="text" th:field="*{name}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
+                </div>
+
+                <div>
+                    <label for="year">Year</label>
+                    <input id="year" type="number" th:field="*{year}"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
+                </div>
+
+                <div id="author-list">
+                    <label for="author1">Authors</label>
+                    <!--authors-->
+                    <div th:each="author, iter : ${book.getAuthors()}">
+                        <input id="author1" type="text" th:name="${'author' + iter.index}" th:value="${author.getName()}"/>
+                    </div>
+                    <!--authors to be added-->
+                    <div th:each="index : ${#numbers.sequence(book.getAuthors().size(), 2)}">
+                        <label><input th:id="${'author' + index}" hidden type="text" th:name="${'author' + index}"/></label>
+                    </div>
+                    <div style="color:red" th:if="${#fields.hasErrors('authors')}">authors error</div>
+                    <!--new author functionality-->
+                    <div>
+                        <label><input hidden id="author-count" type="number" th:value="${book.authors.size()}"/></label>
+                        <button type="button" id="add-author-btn">Add author</button>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div>
+                    <button type="submit">Add book</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
