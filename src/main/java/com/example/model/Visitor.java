@@ -22,7 +22,7 @@ public class Visitor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotNull(message = "name is empty")
     @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String name;

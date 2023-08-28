@@ -20,7 +20,7 @@
                 <p>Is free</p>
             </div>
             <div th:unless="${book.isFree()}">
-                <p>Borrowed by: <span th:text="${book.getHolder().getName()}">visitor</span></p>
+                <p>Borrowed by: <a th:href="@{/visitors/__${book.getHolder().getId()}__}" th:text="${book.getHolder().getName()}">visitor</a></p>
             </div>
         </div>
         <div>
@@ -28,7 +28,7 @@
             <div th:if="${book.isFree()}">
                 <p><a th:href="@{/borrowing-records/new?bookId=__${book.getId()}__}">Borrow book</a></p>
             </div>
-            <form th:method="DELETE" th:action="@{/books/__${book.getId()}__}">
+            <form hidden th:method="DELETE" th:action="@{/books/__${book.getId()}__}">
                 <button type="submit">Delete book</button>
             </form>
         </div>

@@ -43,7 +43,7 @@ public class Book {
     private Set<Author> authors = new HashSet<>();
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @OrderBy("borrowedAt")
+    @OrderBy("borrowedAt DESC")
     @ToString.Exclude
     private Set<BorrowingRecord> borrowingRecords = new TreeSet<>(Comparator.comparing(BorrowingRecord::getBorrowedAt));
 
@@ -73,8 +73,18 @@ public class Book {
     }
 
     public String getFullName() {
+        return getFullName(false);
+    }
+
+    public String getFullName(boolean withStatus) {
 
         StringBuilder strBuilder = new StringBuilder();
+
+        if (withStatus) {
+            strBuilder.append("(");
+            strBuilder.append(isFree() ? "free" : "not free");
+            strBuilder.append(") ");
+        }
 
         strBuilder.append("'").append(getName()).append("'");
         strBuilder.append(" by ");

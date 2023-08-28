@@ -8,8 +8,8 @@
     <div>
         <h4>Borrowing record for '<span th:text="${borrowingRecord}">borrowingRecord</span>'</h4>
         <div>
-            <p>Book: <span th:text="${borrowingRecord.getBook().getName()}">book</span></p>
-            <p>Visitor: <span th:text="${borrowingRecord.getVisitor().getName()}">visitor</span></p>
+            <p>Book: <a th:href="@{/books/__${borrowingRecord.getBook().getId()}__}" th:text="${borrowingRecord.getBook().getName()}">book</a></p>
+            <p>Visitor: <a th:href="@{/visitors/__${borrowingRecord.getVisitor().getId()}__}" th:text="${borrowingRecord.getVisitor().getName()}">visitor</a></p>
             <p>Borrowed at: <span th:text="${borrowingRecord.getBorrowedAt()}">borrowed at</span></p>
             <p>Returned at: <span th:text="${borrowingRecord.getReturnedAt()}">returned at</span></p>
             <p>User: <span th:text="${borrowingRecord.getUser() == null ? '' : borrowingRecord.getUser().getUsername()}">user</span></p>

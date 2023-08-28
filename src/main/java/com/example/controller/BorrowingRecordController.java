@@ -56,7 +56,7 @@ public class BorrowingRecordController {
                          @ModelAttribute @Valid BorrowingRecord borrowingRecord, BindingResult bindingResult) {
 
         if (borrowingRecord.getBook() != null && !borrowingRecord.getBook().isFree()) {
-            throw new RuntimeException("Book is not available");
+            throw new RuntimeException("Book '" + borrowingRecord.getBook().getFullName() + "' is not available");
         }
 
         if (bindingResult.hasErrors()) {
@@ -83,7 +83,7 @@ public class BorrowingRecordController {
 
         if (borrowingRecord.getBook() != null && !borrowingRecord.getBook().isFree()) {
             if (!borrowingRecord.getBook().getCurrentBorrowingRecord().getId().equals(id)) {
-                throw new RuntimeException("Book is not available");
+                throw new RuntimeException("Book '" + borrowingRecord.getBook().getFullName() + "' is not available");
             }
         }
 

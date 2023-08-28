@@ -8,7 +8,8 @@
     <div>
         <h4>Borrowing records</h4>
         <div>
-            <p><a href="/borrowing-records/new">Add new borrowing record</a></p>
+            <a href="/borrowing-records/new">Add new borrowing record</a>
+            <hr/>
         </div>
         <div th:each="borrowingRecord : ${borrowingRecords}">
             <p><a th:href="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:text="${borrowingRecord}">borrowing record</a></p>

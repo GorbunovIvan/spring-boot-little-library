@@ -18,12 +18,12 @@ public class BorrowingRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "book_id")
     @NotNull(message = "book is empty")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "visitor_id")
     @NotNull(message = "visitor is empty")
     private Visitor visitor;
@@ -46,6 +46,12 @@ public class BorrowingRecord {
         }
     }
 
+    @PreRemove
+    private void remove() {
+        visitor.getBorrowingRecords().remove(this);
+        book.getBorrowingRecords().remove(this);
+    }
+
     public boolean isBorrowedNow() {
         return getReturnedAt() == null;
     }
@@ -63,7 +69,7 @@ public class BorrowingRecord {
     }
 
     public String getNameForBookPage() {
-        return String.format("taken by %s at %s and %s",
+        return String.format("%s at %s and %s",
                 getVisitor().getName(),
                 getBorrowedAt(),
                 isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());

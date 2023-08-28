@@ -37,6 +37,7 @@ public class BorrowingRecordService {
         return borrowingRecordRepository.save(borrowingRecord);
     }
 
+    @Transactional
     public void deleteById(Long id) {
         borrowingRecordRepository.deleteById(id);
     }
