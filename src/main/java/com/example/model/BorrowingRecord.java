@@ -28,16 +28,16 @@ public class BorrowingRecord {
     @NotNull(message = "visitor is empty")
     private Visitor visitor;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "borrowed_at")
     @NotNull
     private LocalDateTime borrowedAt;
 
     @Column(name = "returned_at")
     private LocalDateTime returnedAt;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @PrePersist
     private void init() {
