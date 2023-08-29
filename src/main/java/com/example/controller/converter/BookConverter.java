@@ -20,25 +20,6 @@ import java.util.stream.Collectors;
 public class BookConverter implements Converter<String, Book> {
 
     private final BookService bookService;
-//    private final BookService1 bookService;
-
-//    public static void main(String[] args) {
-//
-//        var bookConverter = new BookConverter(new BookService1());
-//
-//        var sources = List.of(
-//                "uyttyu12",
-//                "hjk by folk",
-//                "fgh by folk, oiuwer",
-//                "fgh by folk",
-//                "fgh by oiuwer",
-//                "fgh"
-//        );
-//
-//        for (var source : sources) {
-//            System.out.println(bookConverter.convert(source));
-//        }
-//    }
 
     @Override
     public Book convert(@Nullable String source) {
@@ -102,17 +83,4 @@ public class BookConverter implements Converter<String, Book> {
 
         return books.get(0);
     }
-
-//    static class BookService1 {
-//        private final List<Book> books = List.of(
-//                new Book(1, "uyttyu12", 1, Set.of(new Author("sdf12")), new HashSet<>()),
-//                new Book(2, "fgh", 1, Set.of(new Author("folk"), new Author("oiuwer")), new HashSet<>()),
-//                new Book(3, "hjk", 1, Set.of(new Author("folk")), new HashSet<>())
-//        );
-//        List<Book> getAllByName(String name) {
-//            return books.stream()
-//                    .filter(b -> b.getName().equalsIgnoreCase(name))
-//                    .collect(Collectors.toList());
-//        }
-//    }
 }
