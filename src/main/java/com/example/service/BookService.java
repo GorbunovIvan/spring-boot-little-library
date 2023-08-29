@@ -22,12 +22,12 @@ public class BookService {
                 .orElse(null);
     }
 
-    public List<Book> getAllByName(String name) {
-        return bookRepository.findAllByNameIgnoreCase(name);
-    }
-
     public Set<Book> getAll() {
         return new HashSet<>(bookRepository.findAll());
+    }
+
+    public List<Book> getAllByName(String name) {
+        return bookRepository.findAllByNameIgnoreCase(name);
     }
 
     public Book create(Book book) {
