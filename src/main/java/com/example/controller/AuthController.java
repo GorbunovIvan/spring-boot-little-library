@@ -23,12 +23,12 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String login() {
+    public String loginForm() {
         return "auth/login";
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String registerForm(Model model) {
         model.addAttribute("user", new User());
         return "auth/register";
     }

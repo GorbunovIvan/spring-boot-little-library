@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "borrowing-records",
@@ -39,6 +40,8 @@ public class BorrowingRecord {
     @Column(name = "returned_at")
     private LocalDateTime returnedAt;
 
+    private static DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @PrePersist
     private void init() {
         if (borrowedAt == null) {
@@ -62,23 +65,30 @@ public class BorrowingRecord {
 
     public String toString() {
         return String.format("%s taken by %s at %s and %s",
-                getBook().getFullName(),
-                getVisitor().getName(),
-                getBorrowedAt(),
-                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
+                getBook() != null ? getBook().getFullName() : "",
+                getVisitor() != null ? getVisitor().getName() : "",
+                formatDateTime(getBorrowedAt()),
+                isBorrowedNow() ? "not returned yet" : "returned at " + formatDateTime(getReturnedAt()));
     }
 
     public String getNameForBookPage() {
         return String.format("%s at %s and %s",
-                getVisitor().getName(),
-                getBorrowedAt(),
-                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
+                getVisitor() != null ? getVisitor().getName() : "",
+                formatDateTime(getBorrowedAt()),
+                isBorrowedNow() ? "not returned yet" : "returned at " + formatDateTime(getReturnedAt()));
     }
 
     public String getNameForVisitorPage() {
         return String.format("%s (taken at %s and %s)",
-                getBook().getFullName(),
-                getBorrowedAt(),
-                isBorrowedNow() ? "not returned yet" : "returned at " + getReturnedAt());
+                getBook() != null ? getBook().getFullName() : "",
+                formatDateTime(getBorrowedAt()),
+                isBorrowedNow() ? "not returned yet" : "returned at " + formatDateTime(getReturnedAt()));
+    }
+
+    private String formatDateTime(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return "";
+        }
+        return dateTime.format(DATE_TIME_FORMATTER);
     }
 }

@@ -47,17 +47,4 @@ public class Visitor {
                 .filter(br -> !br.isBorrowedNow())
                 .collect(Collectors.toSet());
     }
-
-    public Set<Book> getAllBooksEverBorrowed() {
-        return borrowingRecords.stream()
-                .map(BorrowingRecord::getBook)
-                .collect(Collectors.toSet());
-    }
-
-    public Set<Book> getHeldBooks() {
-        return borrowingRecords.stream()
-                .filter(BorrowingRecord::isBorrowedNow)
-                .map(BorrowingRecord::getBook)
-                .collect(Collectors.toSet());
-    }
 }

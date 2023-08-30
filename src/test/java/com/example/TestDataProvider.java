@@ -46,8 +46,8 @@ public class TestDataProvider {
         );
 
         users = List.of(
-                new User(1, "1 test visitor", "password", true, Set.of(Role.USER)),
-                new User(2, "2 test visitor", "password", true, Set.of(Role.USER))
+                new User(1, "1 test user", "password", true, Set.of(Role.USER)),
+                new User(2, "2 test user", "password", true, Set.of(Role.USER))
         );
 
         borrowingRecords = List.of(
