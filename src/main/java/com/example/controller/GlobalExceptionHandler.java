@@ -19,7 +19,8 @@ public class GlobalExceptionHandler {
         e.printStackTrace(new PrintWriter(writer));
         var stackTrace = writer.toString();
 
-        if (!e.getMessage().equals("No static resource favicon.ico.")) {
+        if (e.getMessage() != null
+                && e.getMessage().equals("No static resource favicon.ico.")) {
             log.error(stackTrace);
         }
 

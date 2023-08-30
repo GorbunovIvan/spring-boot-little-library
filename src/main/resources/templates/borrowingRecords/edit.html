@@ -9,7 +9,7 @@
 
         <div th:include="fragments/menu :: commonMenu"></div>
 
-        <h4>Editing borrowing-record '<span th:text="${borrowingRecord.toString()}">borrowing-record</span>'</h4>
+        <h4>Editing borrowing record '<span th:text="${borrowingRecord.toString()}">borrowing-record</span>'</h4>
 
         <div>
             <form method="POST" th:action="@{/borrowing-records/__${borrowingRecord.getId()}__}" th:object="${borrowingRecord}">
