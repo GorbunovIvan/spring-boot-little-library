@@ -7,7 +7,7 @@
 <body>
     <div>
 
-        <div th:include="fragments/menu :: commonMenu"></div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
 
         <h4>Editing visitor '<span style="font-style: italic" th:text="${visitor.getName()}">visitor</span>'</h4>
 

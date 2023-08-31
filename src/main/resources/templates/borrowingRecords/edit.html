@@ -7,7 +7,7 @@
 <body>
     <div>
 
-        <div th:include="fragments/menu :: commonMenu"></div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
 
         <h4>Editing borrowing record '<span th:text="${borrowingRecord.toString()}">borrowing-record</span>'</h4>
 

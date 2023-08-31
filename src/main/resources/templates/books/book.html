@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <div th:include="fragments/menu :: commonMenu"></div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
         <h4>Book '<span style="font-style: italic" th:text="${book.getName()}">book</span>' by <span th:text="${book.getAuthorsAsString()}">authors</span></h4>
         <div>
             <p>Name: <span th:text="${book.getName()}">name</span></p>

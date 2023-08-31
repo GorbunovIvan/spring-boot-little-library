@@ -34,7 +34,7 @@ public class Book {
     @Digits(integer = 4, fraction = 0)
     private Integer year;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
@@ -42,7 +42,7 @@ public class Book {
     @ToString.Exclude
     private Set<Author> authors = new HashSet<>();
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "book", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @OrderBy("borrowedAt DESC")
     @ToString.Exclude
     private Set<BorrowingRecord> borrowingRecords = new TreeSet<>(Comparator.comparing(BorrowingRecord::getBorrowedAt));

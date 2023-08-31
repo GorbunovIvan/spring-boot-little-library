@@ -27,7 +27,7 @@ public class Visitor {
     @Size(min = 3, max = 99, message = "name should be in range from 3 to 99 characters long")
     private String name;
 
-    @OneToMany(mappedBy = "visitor", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @OneToMany(mappedBy = "visitor", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @OrderBy("borrowedAt")
     @ToString.Exclude
     private Set<BorrowingRecord> borrowingRecords = new TreeSet<>(Comparator.comparing(BorrowingRecord::getBorrowedAt));
