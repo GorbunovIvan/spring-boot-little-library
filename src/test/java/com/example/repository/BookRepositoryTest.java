@@ -36,6 +36,31 @@ class BookRepositoryTest {
     }
 
     @Test
+    void testFindById() {
+
+        var books = testDataProvider.getBooks();
+        assertFalse(books.isEmpty());
+
+        for (var book : books) {
+
+            var bookOpt = bookRepository.findById(book.getId());
+            assertTrue(bookOpt.isPresent());
+            assertEquals(book, bookOpt.get());
+        }
+
+        assertTrue(bookRepository.findById(-1).isEmpty());
+    }
+
+    @Test
+    void testFindAll() {
+
+        var books = testDataProvider.getBooks();
+        assertFalse(books.isEmpty());
+
+        assertEquals(books, bookRepository.findAll());
+    }
+
+    @Test
     void testFindAllByNameIgnoreCase() {
 
         var books = testDataProvider.getBooks();

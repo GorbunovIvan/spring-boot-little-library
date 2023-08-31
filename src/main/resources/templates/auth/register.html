@@ -6,7 +6,7 @@
 </head>
 <body>
     <div>
-        <div th:include="fragments/menu :: commonMenu"></div>
+        <div th:insert="~{fragments/menu :: commonMenu}"></div>
         <form method="POST" action="/auth" th:object="${user}">
             <div>
                 <label>Username <input type="text" th:field="*{username}"/></label>

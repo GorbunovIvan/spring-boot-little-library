@@ -24,10 +24,26 @@ class VisitorRepositoryTest {
     void setUp() {
 
         testDataProvider.removeIds();
-        testDataProvider.getVisitors().forEach(b -> b.getBorrowingRecords().clear());
+        testDataProvider.getVisitors().forEach(v -> v.getBorrowingRecords().clear());
 
         visitorRepository.deleteAll();
         visitorRepository.saveAll(testDataProvider.getVisitors());
+    }
+
+    @Test
+    void testFindById() {
+
+        var visitors = testDataProvider.getVisitors();
+        assertFalse(visitors.isEmpty());
+
+        for (var visitor : visitors) {
+
+            var visitorOpt = visitorRepository.findById(visitor.getId());
+            assertTrue(visitorOpt.isPresent());
+            assertEquals(visitor, visitorOpt.get());
+        }
+
+        assertTrue(visitorRepository.findById(-1).isEmpty());
     }
 
     @Test
