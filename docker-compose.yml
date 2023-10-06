@@ -1,0 +1,35 @@
+
+version: "3.8"
+
+services:
+
+  #  MySQL service
+  mysql-db:
+    image: mysql
+    command: --default-authentication-plugin=caching_sha2_password
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: spring-boot-little-library
+
+  #  spring-boot-little-library
+  spring-boot-little-library:
+    depends_on:
+      - mysql-db
+    image: spring-boot-little-library-image
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICAION_JSON: '{
+        "spring.datasource.url" : "jdbc:mysql://mysql-db:3306/spring-boot-little-library",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.datasource.initialization-mode" : "always",
+        "spring.datasource.continue-on-error" : "true",
+        "spring.datasource.max-wait" : "30000",
+        "spring.jpa.hibernate.ddl-auto" : "update",
+        "spring.jpa.show-sql" : "true",
+        "spring.jpa.open-in-view" : "false",
+        "spring.mvc.hiddenmethod.filter.enabled" : "true"
+      }'
