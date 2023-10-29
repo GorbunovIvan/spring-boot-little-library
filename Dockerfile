@@ -3,7 +3,11 @@ FROM tomcat:10.1.13-jdk21-openjdk-slim
 WORKDIR /usr/local/tomcat/webapps/
 
 # Rename your WAR file to ROOT.war and copy it into the Tomcat webapps directory
+<<<<<<< HEAD
 # Without renaming it the URL to app will be 'localhost:8080/my-app' instead of 'localhost:8080'
+=======
+# Because without it the URL to app will be 'localhost:8080/my-app' instead of 'localhost:8080'
+>>>>>>> origin/docker
 COPY target/spring-boot-little-library-0.0.1-SNAPSHOT.war ./ROOT.war
 
 EXPOSE 8080
